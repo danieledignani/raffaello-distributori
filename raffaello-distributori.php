@@ -45,6 +45,9 @@ class DistributoriPlugin {
         include_once DISTRIBUTORI_PLUGIN_DIR . 'includes/province-handler.php';
         include_once DISTRIBUTORI_PLUGIN_DIR . 'includes/archive-filter.php';
         include_once DISTRIBUTORI_PLUGIN_DIR . 'includes/acf-fields.php';
+        if (is_admin()) {
+            include_once DISTRIBUTORI_PLUGIN_DIR . 'includes/admin.php';
+        }
     }
 
     private function init_hooks() {
