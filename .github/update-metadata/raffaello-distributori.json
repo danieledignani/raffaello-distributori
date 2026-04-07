@@ -1,17 +1,17 @@
 {
   "name": "Raffaello Distributori Add-On",
-  "version": "7.5.4",
-  "download_url": "https://github.com/danieledignani/raffaello-distributori/releases/download/7.5.4/raffaello-distributori.zip",
+  "version": "7.5.5",
+  "download_url": "https://github.com/danieledignani/raffaello-distributori/releases/download/7.5.5/raffaello-distributori.zip",
   "homepage": "https://raffaelloragazzi.it",
   "requires": "5.0",
   "tested": "6.5",
-  "last_updated": "2026-04-07 15:56:48",
+  "last_updated": "2026-04-07 16:21:01",
   "upgrade_notice": "Aggiornamento automatico da GitHub",
   "author": "Daniele Dignani",
   "author_homepage": "https://github.com/danieledignani",
   "sections": {
     "description": "Gestione dei distributori e classi di sconto per Raffaello Ragazzi. Include REST API e struttura avanzata ACF.",
     "installation": "Carica il plugin tramite il pannello 'Plugin > Aggiungi nuovo' o scompatta nella cartella wp-content/plugins/",
-    "changelog": "<li>Versione iniziale</li>\n"
+    "changelog": "<li>Add admin tools page with AJAX batch operations and snippet conflict detection</li>\n<li>Update JSON to version 7.5.4</li>"
   }
 }
