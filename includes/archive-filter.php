@@ -25,10 +25,14 @@ add_action('init', function() {
         'top'
     );
 
-    // Scuola + Provincia
+    // Scuola + Provincia → solo la provincia come query var:
+    // la scuola è nell'URL ma viene filtrata client-side dal template YOOtheme.
+    // Impostare entrambi i query var causerebbe WordPress a usare distributore_scuola
+    // come queried_object, caricando il template sbagliato ("Seleziona Provincia"
+    // invece di "Distributori").
     add_rewrite_rule(
         '^distributori/scuola-([^/]+)/provincia-([^/]+)/?$',
-        'index.php?post_type=distributore&distributore_scuola=$matches[1]&distributore_provincia=$matches[2]',
+        'index.php?post_type=distributore&distributore_provincia=$matches[2]',
         'top'
     );
 });
