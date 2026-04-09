@@ -83,7 +83,6 @@ function rd_delete_single_distributore_callback($request) {
 
     wc_get_logger()->info("Eliminazione in corso per: [ID: $post_id, Titolo: \"$post_title\"]");
 
-    wp_set_object_terms($post_id, [], 'distributore_scuola');
     wp_set_object_terms($post_id, [], 'distributore_provincia');
 
     $acf_fields = [
@@ -152,25 +151,11 @@ function rd_upsert_distributore(array $distributore): ?int {
 }
 
 function rd_update_classi_sconto($post_id, $classi_sconto, $province_obj) {
-    $grouped        = [];
-    $scuole_slugs   = [];
+    $result         = [];
     $province_slugs = [];
 
     foreach ($classi_sconto as $cs) {
-        $scuola_slug  = $cs['scuola'];
-        $scuole_slugs[] = $scuola_slug;
-        $scuola_term  = get_term_by('slug', $scuola_slug, 'distributore_scuola');
-        if (!$scuola_term) continue;
-
-        $scuola_id = (int)$scuola_term->term_id;
-        if (!isset($grouped[$scuola_id])) {
-            $grouped[$scuola_id] = [
-                'scuola' => $scuola_id,
-                'email'  => $cs['email'] ?? '',
-                'zone'   => [],
-            ];
-        }
-
+        $zone = [];
         foreach ($cs['zone'] as $zona) {
             $provincia_slug   = rd_get_provincia_slug_from_sigla($province_obj, $zona['provincia']);
             $province_slugs[] = $provincia_slug;
@@ -181,15 +166,19 @@ function rd_update_classi_sconto($post_id, $classi_sconto, $province_obj) {
             if (!empty($zona['vendita']))    $tipo[] = 'vendita';
             if (!empty($zona['propaganda'])) $tipo[] = 'promozione';
 
-            $grouped[$scuola_id]['zone'][] = [
+            $zone[] = [
                 'provincia' => (int)$prov_term->term_id,
                 'tipo'      => $tipo,
             ];
         }
+
+        $result[] = [
+            'email' => $cs['email'] ?? '',
+            'zone'  => $zone,
+        ];
     }
 
-    update_field('classi_sconto', array_values($grouped), $post_id);
-    rd_insert_taxonomies_with_slugs($post_id, $scuole_slugs, 'distributore_scuola');
+    update_field('classi_sconto', $result, $post_id);
     rd_insert_taxonomies_with_slugs($post_id, $province_slugs, 'distributore_provincia');
 }
 
@@ -225,26 +214,22 @@ function rd_get_distributori_callback($request) {
         $classi_sconto = [];
         if (!empty($acf['classi_sconto']) && is_array($acf['classi_sconto'])) {
             foreach ($acf['classi_sconto'] as $cs) {
-                $scuola_term = get_term($cs['scuola'], 'distributore_scuola');
-                $scuola_slug = $scuola_term ? $scuola_term->slug : '';
-
                 $zone = [];
                 foreach ($cs['zone'] ?? [] as $zona) {
-                    $prov_term     = get_term($zona['provincia'], 'distributore_provincia');
+                    $prov_term      = get_term($zona['provincia'], 'distributore_provincia');
                     $provincia_name = $prov_term ? $prov_term->name : '';
                     $sigla          = rd_get_provincia_sigla_from_nome($province_obj, $provincia_name);
 
                     $zone[] = [
-                        'provincia' => $sigla ?? '',
-                        'vendita'   => in_array('vendita', $zona['tipo'] ?? []),
+                        'provincia'  => $sigla ?? '',
+                        'vendita'    => in_array('vendita', $zona['tipo'] ?? []),
                         'propaganda' => in_array('promozione', $zona['tipo'] ?? []),
                     ];
                 }
 
                 $classi_sconto[] = [
-                    'scuola' => $scuola_slug,
-                    'email'  => $cs['email'] ?? '',
-                    'zone'   => $zone,
+                    'email' => $cs['email'] ?? '',
+                    'zone'  => $zone,
                 ];
             }
         }

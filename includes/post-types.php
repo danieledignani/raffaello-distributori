@@ -45,36 +45,6 @@ add_action('init', function() {
     ]);
 
     // -----------------------------------------------------------------------
-    // Tassonomia: distributore_scuola
-    // -----------------------------------------------------------------------
-    register_taxonomy('distributore_scuola', ['distributore'], [
-        'labels' => [
-            'name'          => 'Distributori Scuole',
-            'singular_name' => 'Distributori Scuola',
-            'menu_name'     => 'Scuola',
-            'all_items'     => 'Tutte le scuole',
-            'edit_item'     => 'Modifica Scuola',
-            'view_item'     => 'Visualizza Scuola',
-            'update_item'   => 'Aggiorna Scuola',
-            'add_new_item'  => 'Aggiungi Nuova Scuola',
-            'search_items'  => 'Ricerca Scuola',
-            'not_found'     => 'Nessuna scuola trovata',
-            'no_terms'      => 'Nessuna scuola',
-            'back_to_items' => '← Torna alle scuole',
-        ],
-        'public'            => true,
-        'publicly_queryable' => true,
-        'hierarchical'      => false,
-        'show_ui'           => true,
-        'show_in_menu'      => true,
-        'show_in_rest'      => true,
-        'show_admin_column' => true,
-        'show_in_quick_edit' => true,
-        'rewrite'           => ['slug' => 'distributore-scuola', 'with_front' => true],
-        'sort'              => true,
-    ]);
-
-    // -----------------------------------------------------------------------
     // Tassonomia: distributore_provincia
     // -----------------------------------------------------------------------
     register_taxonomy('distributore_provincia', ['distributore'], [

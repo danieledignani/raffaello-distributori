@@ -202,7 +202,6 @@ add_action('wp_ajax_rd_delete_posts', function() {
         $ids   = get_posts(['post_type' => 'distributore', 'post_status' => 'any', 'posts_per_page' => $batch, 'fields' => 'ids']);
 
         foreach ($ids as $id) {
-            wp_set_object_terms($id, [], 'distributore_scuola');
             wp_set_object_terms($id, [], 'distributore_provincia');
             wp_delete_post($id, true);
         }
