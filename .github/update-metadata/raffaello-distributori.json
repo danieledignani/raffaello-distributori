@@ -1,17 +1,17 @@
 {
   "name": "Raffaello Distributori Add-On",
-  "version": "7.5.8",
-  "download_url": "https://github.com/danieledignani/raffaello-distributori/releases/download/7.5.8/raffaello-distributori.zip",
+  "version": "7.5.9",
+  "download_url": "https://github.com/danieledignani/raffaello-distributori/releases/download/7.5.9/raffaello-distributori.zip",
   "homepage": "https://raffaelloragazzi.it",
   "requires": "5.0",
   "tested": "6.5",
-  "last_updated": "2026-04-08 08:24:29",
+  "last_updated": "2026-04-09 16:16:50",
   "upgrade_notice": "Aggiornamento automatico da GitHub",
   "author": "Daniele Dignani",
   "author_homepage": "https://github.com/danieledignani",
   "sections": {
     "description": "Gestione dei distributori e classi di sconto per Raffaello Ragazzi. Include REST API e struttura avanzata ACF.",
     "installation": "Carica il plugin tramite il pannello 'Plugin > Aggiungi nuovo' o scompatta nella cartella wp-content/plugins/",
-    "changelog": "<li>Fix rewrite rule scuola+provincia: imposta solo distributore_provincia come query var</li>\n<li>Update JSON to version 7.5.7</li>"
+    "changelog": "<li>Rimuovi tassonomia distributore_scuola</li>\n<li>Update JSON to version 7.5.8</li>"
   }
 }
